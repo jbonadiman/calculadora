@@ -10,8 +10,11 @@
 
 div {
     background: black;
-    width: min-content;
     border-radius: 1rem;
+}
+
+div.calculator {
+    width: 10rem;
 }
 
 .display {
@@ -22,7 +25,8 @@ div {
 }
 
 .display > span {
-    padding: 1rem;
+    margin-top: 1rem;
+    padding: 0 1rem 1rem 0.5rem;
     vertical-align: bottom;
 }
 
