@@ -15,16 +15,21 @@ div {
 }
 
 .display {
-    grid-column-start: revert;
     height: 6rem;
+    width: 100%;
     color: white;
     text-align: right;
 }
 
+.display > span {
+    padding: 1rem;
+    vertical-align: bottom;
+}
+
 .keys {
-    padding: 0.7rem;
+    padding: 0.4rem 0.4rem 1rem;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: var(--key-gap);
     justify-items: center;
 }
@@ -59,7 +64,6 @@ button {
     border-radius: 50%;
     height: var(--button-size);
     width: var(--button-size);
-
     border: 0;
 }
 
