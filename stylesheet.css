@@ -7,7 +7,7 @@
     font-family: -apple-system, BlinkMacSystemFont, Roboto, Ubuntu, sans-serif;
 }
 
-#calculator {
+div {
     background: black;
 }
 
@@ -23,14 +23,26 @@
     background: #a7a7a7;
 }
 
+.special:hover {
+    background: #bfbfbf;
+}
+
 .operator {
     background: #fd9404;
     color: #ffffff;
 }
 
+.operator:hover {
+    background: #fdaa35;
+}
+
 .digit {
     background: #333333;
     color: #ffffff;
+}
+
+.digit:hover {
+    background: #3c3c3c;
 }
 
 button {
