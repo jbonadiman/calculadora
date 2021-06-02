@@ -1,0 +1,12 @@
+#calculator {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+button {
+    flex: 0 0 33.3333333%;
+    border-radius: 100%;
+}
+
+.digit {
+}
