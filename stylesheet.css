@@ -1,5 +1,5 @@
 :root {
-    --gap: 0.4rem;
+    --key-gap: 0.4rem;
     --button-size: 2rem;
 }
 
@@ -10,14 +10,23 @@
 
 div {
     background: black;
+    width: min-content;
+    border-radius: 1rem;
+}
+
+.display {
+    grid-column-start: revert;
+    height: 6rem;
+    color: white;
+    text-align: right;
 }
 
 .keys {
-    padding: var(--gap);
+    padding: 0.7rem;
     display: grid;
-    grid-template-columns: repeat(4, 2rem);
-    grid-column-gap: var(--gap);
-    grid-row-gap: var(--gap);
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: var(--key-gap);
+    justify-items: center;
 }
 
 .special {
@@ -54,18 +63,12 @@ button {
     border: 0;
 }
 
-#display {
-    height: 6rem;
-    color: white;
-    text-align: right;
-}
-
 span {
     font-size: 48px;
 }
 
 #zero {
     border-radius: 2rem;
-    grid-column: 1 / span 2;
-    width: auto;
+    grid-column-end: span 2;
+    width: 100%;
 }
