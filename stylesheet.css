@@ -1,11 +1,61 @@
+:root {
+    --gap: 0.4rem;
+}
+
+* {
+    font-size: 26px;
+}
+
 #calculator {
-    display: flex;
-    flex-wrap: wrap;
+    background: black;
+}
+
+.keys {
+    padding: var(--gap);
+    display: grid;
+    grid-template-columns: repeat(4, 2rem);
+    grid-column-gap: var(--gap);
+    grid-row-gap: var(--gap);
+}
+
+.special {
+    background: #a7a7a7;
+}
+
+.operator {
+    background: #fd9404;
+    color: #ffffff;
+}
+
+.digit {
+    background: #333333;
+    color: #ffffff;
 }
 
 button {
-    flex: 0 0 33.3333333%;
-    border-radius: 100%;
+    border-radius: 50%;
+    height: 2rem;
+    width: 2rem;
+
+    border: 0;
+}
+
+button:focus {
+
+}
+
+#display {
+    height: 6rem;
+    color: white;
+    text-align: right;
+}
+
+span {
+    font-size: 48px;
+}
+
+#zero {
+    border-radius: 25%;
 }
 
 .digit {
