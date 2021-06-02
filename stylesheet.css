@@ -1,5 +1,6 @@
 :root {
     --gap: 0.4rem;
+    --button-size: 2rem;
 }
 
 * {
@@ -47,14 +48,10 @@ div {
 
 button {
     border-radius: 50%;
-    height: 2rem;
-    width: 2rem;
+    height: var(--button-size);
+    width: var(--button-size);
 
     border: 0;
-}
-
-button:focus {
-
 }
 
 #display {
@@ -68,8 +65,7 @@ span {
 }
 
 #zero {
-    border-radius: 25%;
-}
-
-.digit {
+    border-radius: 2rem;
+    grid-column: 1 / span 2;
+    width: auto;
 }
