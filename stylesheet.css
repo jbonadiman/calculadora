@@ -18,31 +18,36 @@ body {
 div {
     background: black;
     border-radius: 1rem;
+    margin: 0 auto;
 }
 
 div.calculator {
-    width: 10rem;
+    width: 11rem;
 }
 
 .display {
     height: 6rem;
     width: 100%;
-    color: white;
-    text-align: right;
 }
 
-.display > span {
-    margin-top: 1rem;
-    padding: 0 1rem 1rem 0.5rem;
+.display > p {
+    direction: rtl;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 3rem 0.8rem 1rem;
     vertical-align: bottom;
+    color: #ffffff;
+    text-align: right;
+    font-size: 40px;
 }
 
 .keys {
-    padding: 0.4rem 0.4rem 1rem;
+    padding: 0.4rem 0.8rem 1rem;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: var(--key-gap);
     justify-items: center;
+    width: 9.4rem;
 }
 
 .special {
@@ -76,10 +81,6 @@ button {
     height: var(--button-size);
     width: var(--button-size);
     border: 0;
-}
-
-span {
-    font-size: 48px;
 }
 
 #zero {
