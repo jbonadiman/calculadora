@@ -8,6 +8,13 @@
     font-family: -apple-system, BlinkMacSystemFont, Roboto, Ubuntu, sans-serif;
 }
 
+body {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 div {
     background: black;
     border-radius: 1rem;
