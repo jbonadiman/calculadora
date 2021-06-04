@@ -16,12 +16,12 @@ body {
 }
 
 div {
-    background: black;
+    background: #000;
     border-radius: 1rem;
     margin: 0 auto;
 }
 
-div.calculator {
+.calculator {
     width: 11rem;
 }
 
@@ -30,7 +30,7 @@ div.calculator {
     width: 100%;
 }
 
-.display > p {
+.display > .value {
     direction: rtl;
     margin-top: 0;
     margin-bottom: 0;
@@ -71,9 +71,19 @@ div.calculator {
     background: #fdaa35;
 }
 
-.operator > input:checked ~ .operator {
-    background: #ffffff;
+.toggle {
+    position: absolute;
+    margin-left: -9999px;
+    visibility: hidden;
+}
+
+.toggle:checked + label {
+    background: #fff;
     color: #fd9404;
+}
+
+label {
+    text-align: center;
 }
 
 .digit {
@@ -85,15 +95,21 @@ div.calculator {
     background: #3c3c3c;
 }
 
+.digit:active {
+    background: #414141;
+}
+
+div.button {
+    display: flex;
+    align-content: flex-end;
+    flex-wrap: wrap;
+}
+
 .button {
     border-radius: 50%;
     height: var(--button-size);
     width: var(--button-size);
     border: 0;
-}
-
-.button > input {
-    /*visibility: hidden;*/
 }
 
 #zero {

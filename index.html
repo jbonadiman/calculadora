@@ -8,29 +8,39 @@
     <title>Calculadora</title>
 </head>
 <body>
-<div class="calculator" id="calculator">
-    <div class="display" id="display">
-        <p id="value">999.999.999</p>
+<div class="calculator">
+    <div class="display">
+        <p class="value">999.999.999</p>
     </div>
     <div class="keys">
         <button class="button special" id="erase">C</button>
         <button class="button special" id="plus-minus">±</button>
         <button class="button special" id="percent">%</button>
-        <label class="button operator" for="division" tabindex="-1">÷
-            <input type="checkbox" class="operator" id="division" tabindex="-1">
-        </label>
+        <div class="button operator">
+            <input id="division" type="checkbox" class="toggle">
+            <label for="division" class="button">÷</label>
+        </div>
         <button class="button digit" id="seven">7</button>
         <button class="button digit" id="eight">8</button>
         <button class="button digit" id="nine">9</button>
-        <button class="button operator" id="multiplication">×</button>
+        <div class="button operator">
+            <input id="multiplication" type="checkbox" class="toggle">
+            <label for="multiplication" class="button">×</label>
+        </div>
         <button class="button digit" id="four">4</button>
         <button class="button digit" id="five">5</button>
         <button class="button digit" id="six">6</button>
-        <button class="button operator" id="subtraction">–</button>
+        <div class="button operator">
+            <input id="subtraction" type="checkbox" class="toggle">
+            <label for="subtraction" class="button">–</label>
+        </div>
         <button class="button digit" id="one">1</button>
         <button class="button digit" id="two">2</button>
         <button class="button digit" id="three">3</button>
-        <button class="button operator" id="sum">+</button>
+        <div class="button operator">
+            <input id="sum" type="checkbox" class="toggle">
+            <label for="sum" class="button">+</label>
+        </div>
         <button class="button digit" id="zero">0</button>
         <button class="button digit" id="dot">.</button>
         <button class="button operator" id="equals">=</button>
