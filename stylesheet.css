@@ -50,10 +50,11 @@ div {
     width: 9.4rem;
 }
 
-div.button {
+div.op-wrap {
     display: flex;
     align-content: flex-end;
     flex-wrap: wrap;
+    background: black;
 }
 
 .button {
@@ -63,7 +64,7 @@ div.button {
     border: 0;
 }
 
-.toggle {
+input.toggle {
     position: absolute;
     margin-left: -9999px;
     visibility: hidden;
