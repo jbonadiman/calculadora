@@ -4,6 +4,7 @@ class Operation {
   ]
 
   static MAX_DIGITS = 9;
+  static INTL = Intl.NumberFormat();
 
   constructor() {
     this.operands = [];
@@ -26,7 +27,7 @@ class Operation {
   }
 
   getCurrentOperand() {
-    return this.currentOperand;
+    return Operation.INTL.format(Number(this.currentOperand));
   }
 }
 
