@@ -54,7 +54,7 @@ div.op-wrap {
     display: flex;
     align-content: flex-end;
     flex-wrap: wrap;
-    background: black;
+    background: hsla(0, 0%, 0%, 0);
 }
 
 .button {
