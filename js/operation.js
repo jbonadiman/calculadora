@@ -29,7 +29,7 @@ class Operation {
   }
 
   addDigit(stringDigit) {
-    if (this.currentOperand.match(/\d+/g).length >= Operation.MAX_DIGITS) {
+    if (this.reachedDigitLimit()) {
       alert(`Não é possível inserir mais de ${Operation.MAX_DIGITS} dígitos`);
       return;
     }
@@ -47,7 +47,7 @@ class Operation {
     if (separator === Operation.DECIMAL_SEP) {
       console.debug(`decimal separator: ${separator}`)
 
-      if (this.currentOperand.match(/\d+/g).length >= Operation.MAX_DIGITS) {
+      if (this.reachedDigitLimit()) {
         alert(`Não é possível inserir mais de ${Operation.MAX_DIGITS} dígitos`);
         return;
       }
