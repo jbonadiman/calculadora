@@ -1,5 +1,5 @@
 import Display from './display.js';
-import Operation from './operation.js';
+import {Operation} from './calculation.js';
 
 class Calculator {
   static DIGIT_KEYS = /^\d$/;
@@ -14,6 +14,17 @@ class Calculator {
 
     this.digitsElements = [...document.getElementsByClassName('digit')];
     this.eraseElement = document.getElementById('erase');
+    this.operatorsElements = document.getElementsByName('operator');
+
+    if (this.eraseElement.addEventListener) {
+      this.eraseElement.addEventListener('click', () => {
+        if (this.eraseElement.textContent === 'C') {
+          this.deleteOperand();
+        } else if (this.eraseElement.textContent === 'AC') {
+          this.deleteOperation();
+        }
+      });
+    }
 
     this.digitsElements
       .filter(dg => dg.id === 'dot')[0]
@@ -61,7 +72,32 @@ class Calculator {
 
   deleteDigit() {
     this.operation.deleteDigit();
+
+    if (this.operation.isOperandZeroed()) {
+      this.changeCBtn();
+    }
+
     this.updateDisplay();
+  }
+
+  deleteOperand() {
+    this.operation.deleteOperand();
+    this.changeCBtn();
+    this.updateDisplay();
+  }
+
+  deleteOperation() {
+    this.operation.deleteOperation();
+    this.changeCBtn();
+    this.updateDisplay();
+  }
+
+  setOperator() {
+    const checkedElement = this.operatorsElements.find(el => el.checked);
+    if (checkedElement.length === 0) return;
+
+    
+    this.operation.setOperator(checkedElement[0].value);
   }
 
   updateDisplay() {
@@ -77,9 +113,6 @@ if (document.addEventListener) {
     console.debug({key})
 
     switch (true) {
-      case Calculator.DELETE_KEYS.test(key):
-        calculator.deleteDigit();
-        break;
       case Calculator.DIGIT_KEYS.test(key):
         calculator.pressDigit(key);
         break;
@@ -90,6 +123,16 @@ if (document.addEventListener) {
 
     calculator.updateDisplay();
   }, false);
+
+  document.addEventListener('keydown', evt => {
+    const {key} = evt;
+    switch (true) {
+      case Calculator.DELETE_KEYS.test(key):
+        calculator.deleteDigit();
+        break;
+    }
+  });
+
 } else {
   console.error('Browser not compatible!');
 }
