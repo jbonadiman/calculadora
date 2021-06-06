@@ -30,7 +30,6 @@ class Operation {
 
   addDigit(stringDigit) {
     if (this.reachedDigitLimit()) {
-      alert(`Não é possível inserir mais de ${Operation.MAX_DIGITS} dígitos`);
       return;
     }
 
@@ -43,19 +42,12 @@ class Operation {
     }
   }
 
-  addDecimal(separator) {
-    if (separator === Operation.DECIMAL_SEP) {
-      console.debug(`decimal separator: ${separator}`)
-
-      if (this.reachedDigitLimit()) {
-        alert(`Não é possível inserir mais de ${Operation.MAX_DIGITS} dígitos`);
-        return;
-      }
-
-      this.currentOperand += '.0';
-    } else {
-      console.debug(`thousand separator: ${separator}`)
+  addDecimal() {
+    if (this.reachedDigitLimit()) {
+      return;
     }
+
+    this.currentOperand += '.0';
   }
 
   deleteDigit() {
@@ -68,7 +60,13 @@ class Operation {
 
   reachedDigitLimit() {
     let digits = [...this.currentOperand.matchAll(/\d/g)];
-    return digits.length >= Operation.MAX_DIGITS;
+
+    if (digits.length >= Operation.MAX_DIGITS) {
+      alert(`Não é possível inserir mais de ${Operation.MAX_DIGITS} dígitos`);
+      return true;
+    }
+
+    return false;
   }
 
   getCurrentOperand() {
