@@ -4,10 +4,6 @@ class Operation {
   ]
 
   static MAX_DIGITS = 9;
-  static INTL = Intl.NumberFormat(undefined, {
-    maximumFractionDigits: 8
-  });
-  
   static DECIMAL_SEP = null;
   static THOUSAND_SEP = null;
 
@@ -70,12 +66,13 @@ class Operation {
     this.currentOperand = this.currentOperand.substring(0, this.currentOperand.length - 1);
   }
 
+  reachedDigitLimit() {
+    let digits = [...this.currentOperand.matchAll(/\d/g)];
+    return digits.length >= Operation.MAX_DIGITS;
+  }
+
   getCurrentOperand() {
-    let formattedOperand = Operation.INTL.format(Number(this.currentOperand));
-
-    console.debug({formattedOperand});
-
-    return formattedOperand;
+    return this.currentOperand;
   }
 }
 
