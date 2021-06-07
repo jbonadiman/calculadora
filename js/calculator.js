@@ -4,6 +4,8 @@ import {Operation} from './calculation.js';
 class Calculator {
   static DIGIT_KEYS = /^\d$/;
   static SEP_KEYS = /^[,.]$/;
+  static OPERATOR_KEYS = /^[\/*\-+]$/;
+  static EQUALS_KEYS = /^Enter$|^=$/;
   static DELETE_KEYS = /^Backspace$/;
 
   constructor() {
@@ -14,7 +16,23 @@ class Calculator {
 
     this.digitsElements = [...document.getElementsByClassName('digit')];
     this.eraseElement = document.getElementById('erase');
-    this.operatorsElements = document.getElementsByName('operator');
+    this.operatorsElements = [...document.getElementsByName('operator')].filter(btn => btn.id !== 'equals');
+    this.equalsElement = document.getElementById('equals');
+
+    if (this.equalsElement.addEventListener) {
+      this.equalsElement.addEventListener('click', () => this.resolveOperation(), false);
+    } else {
+      console.error('Browser not compatible!');
+    }
+
+    this.operatorsElements
+      .forEach(btn => {
+        if (btn.addEventListener) {
+          btn.addEventListener('click', () => this.setOperator(), false);
+        } else {
+          console.error('Browser not compatible!');
+        }
+      });
 
     if (this.eraseElement.addEventListener) {
       this.eraseElement.addEventListener('click', () => {
@@ -23,7 +41,9 @@ class Calculator {
         } else if (this.eraseElement.textContent === 'AC') {
           this.deleteOperation();
         }
-      });
+      }, false);
+    } else {
+      console.error('Browser not compatible!');
     }
 
     this.digitsElements
@@ -35,10 +55,12 @@ class Calculator {
         if (btn.addEventListener) {
           if (btn.textContent.match(/\d/)) {
             btn.addEventListener('click', () => {
-              this.pressDigit(btn.textContent)
-            });
+              this.operation.addDigit(btn.textContent);
+              this.changeAcBtn();
+              this.updateDisplay();
+            }, false);
           } else if (btn.textContent === Operation.DECIMAL_SEP) {
-            btn.addEventListener('click', this.pressSeparator);
+            btn.addEventListener('click', () => this.pressSeparator(), false);
           }
         } else {
           console.error('Browser not compatible!');
@@ -58,10 +80,21 @@ class Calculator {
     }
   }
 
+  pressOperator(operatorId) {
+    const button = this.operatorsElements.filter(op => op.id === operatorId)[0];
+    button.focus();
+    button.click();
+  }
+
+  pressEquals() {
+    this.equalsElement.focus();
+    this.equalsElement.click();
+  }
+
   pressDigit(digit) {
-    this.operation.addDigit(digit);
-    this.changeAcBtn();
-    this.updateDisplay();
+    const button = this.digitsElements.filter(btn => btn.textContent === digit)[0];
+    button.focus();
+    button.click();
   }
 
   pressSeparator() {
@@ -93,11 +126,21 @@ class Calculator {
   }
 
   setOperator() {
-    const checkedElement = this.operatorsElements.find(el => el.checked);
+    const checkedElement = this.operatorsElements.filter(el => el.checked);
     if (checkedElement.length === 0) return;
 
-    
     this.operation.setOperator(checkedElement[0].value);
+    this.updateDisplay();
+  }
+
+  resolveOperation() {
+    const checkedElement = this.operatorsElements.filter(el => el.checked)[0];
+    if (checkedElement.length === 0) return;
+    
+    checkedElement.checked = false;
+
+    this.operation.resolveOperation();
+    this.updateDisplay();
   }
 
   updateDisplay() {
@@ -106,6 +149,13 @@ class Calculator {
 }
 
 const calculator = new Calculator();
+
+const convOperators = {
+  '/': 'division',
+  '*': 'multiplication',
+  '-': 'subtraction',
+  '+': 'sum'
+}
 
 if (document.addEventListener) {
   document.addEventListener('keyup', evt => {
@@ -118,6 +168,12 @@ if (document.addEventListener) {
         break;
       case Calculator.SEP_KEYS.test(key):
         calculator.pressSeparator();
+        break;
+      case Calculator.OPERATOR_KEYS.test(key):
+        calculator.pressOperator(convOperators[key]);
+        break;
+      case Calculator.EQUALS_KEYS.test(key):
+        calculator.pressEquals();
         break;
     }
 
