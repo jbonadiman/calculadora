@@ -87,6 +87,12 @@ export class Operation {
     this.expression.operands.push(Number(this.currentOperand));
     this.currentOperand = '0';
   }
+
+  resolveOperation() {
+    this.expression.operands.push(Number(this.currentOperand));
+    this.currentOperand = this.expression.resolve();
+    this.expression = new Expression();
+  }
 }
 
 export class Expression {
