@@ -38,7 +38,7 @@ export class Operation {
   }
 
   addDecimal() {
-    if (this.reachedDigitLimit()) {
+    if (this.reachedDigitLimit() || this.isDecimal()) {
       return;
     }
 
@@ -92,6 +92,10 @@ export class Operation {
     this.expression.operands.push(Number(this.currentOperand));
     this.currentOperand = this.expression.resolve();
     this.expression = new Expression();
+  }
+
+  isDecimal() {
+    return this.currentOperand.match(/\./);
   }
 }
 
