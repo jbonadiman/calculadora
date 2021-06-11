@@ -4,9 +4,19 @@ export class Operation {
   static THOUSAND_SEP = null;
 
   constructor() {
-    this.expression = new Expression();
+    this.op = {
+      'sum': (a, b) => a + b,
+      'subtract': (a, b) => a - b,
+      'divide': (a, b) => a / b,
+      'multiply': (a, b) => a * b,
+    }
+
+    //this.expression = new Expression();
     this.currentOperand = '0'
-    this.value = 0;
+    this.accumulatedValue = 0;
+
+    this.currentOperator = null;
+    this.lastOperator = null;
 
     if (!Operation.DECIMAL_SEP || !Operation.THOUSAND_SEP) {
       const parts =
@@ -28,9 +38,7 @@ export class Operation {
       return;
     }
 
-    if (this.currentOperand.endsWith('.0')) {
-      this.currentOperand = this.currentOperand.replace('.0', `.${stringDigit.trim()}`);
-    } else if (Number(this.currentOperand) === 0) {
+    if (this.currentOperand === '0') {
       this.currentOperand = stringDigit.trim();
     } else {
       this.currentOperand += stringDigit.trim();
@@ -42,7 +50,7 @@ export class Operation {
       return;
     }
 
-    this.currentOperand += '.0';
+    this.currentOperand += Operation.DECIMAL_SEP;
   }
 
   deleteDigit() {
@@ -53,14 +61,14 @@ export class Operation {
     this.currentOperand = this.currentOperand.substring(0, this.currentOperand.length - 1);
   }
 
-  deleteOperand() {
+  resetOperand() {
     this.currentOperand = '0';
   }
 
   deleteOperation() {
     this.expression = new Expression();
     this.currentOperand = '0'
-    this.value = 0;
+    this.accumulatedValue = 0;
   }
 
   reachedDigitLimit() {
@@ -83,19 +91,43 @@ export class Operation {
   }
 
   setOperator(operator) {
-    this.expression.operation = operator;
-    this.expression.operands.push(Number(this.currentOperand));
-    this.currentOperand = '0';
+    if (this.lastOperator === null) {
+      this.accumulatedValue = Number(this.currentOperand);
+    } else {
+      this.accumulatedValue = this.op[this.currentOperator](
+        this.accumulatedValue,
+        Number(this.currentOperand)
+      );
+    }
+
+    this.lastOperator = this.currentOperator;
+    this.currentOperator = operator;
+
+    // this.expression.operation = operator;
+    // this.expression.operands.push(Number(this.currentOperand));
+    this.resetOperand();
   }
 
   resolveOperation() {
-    this.expression.operands.push(Number(this.currentOperand));
-    this.currentOperand = this.expression.resolve();
-    this.expression = new Expression();
+    if (!this.currentOperator) {
+      return;
+    }
+
+    this.accumulatedValue = this.op[this.currentOperator](
+      this.accumulatedValue,
+      Number(this.currentOperand)
+    );
+
+    this.lastOperator = this.currentOperator = null;
+    this.currentOperand = this.accumulatedValue;
+
+    // this.expression.operands.push(Number(this.currentOperand));
+    // this.currentOperand = this.expression.resolve();
+    // this.expression = new Expression();
   }
 
   isDecimal() {
-    return this.currentOperand.match(/\./);
+    return this.currentOperand.match(new RegExp('\\' + Operation.DECIMAL_SEP));
   }
 }
 

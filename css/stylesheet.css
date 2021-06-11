@@ -32,7 +32,6 @@ div {
 }
 
 .display > .value {
-    direction: rtl;
     margin-top: 0;
     margin-bottom: 0;
     padding: 3rem 0.8rem 1rem;

@@ -56,6 +56,10 @@ class Calculator {
           if (btn.textContent.match(/\d/)) {
             btn.addEventListener('click', () => {
               this.operation.addDigit(btn.textContent);
+              const checkedElement = this.operatorsElements.filter(el => el.checked);
+              if (checkedElement.length > 0) {
+                checkedElement[0].checked = false;
+              }
               this.changeAcBtn();
               this.updateDisplay();
             }, false);
@@ -93,6 +97,7 @@ class Calculator {
 
   pressDigit(digit) {
     const button = this.digitsElements.filter(btn => btn.textContent === digit)[0];
+
     button.focus();
     button.click();
   }
@@ -114,7 +119,7 @@ class Calculator {
   }
 
   deleteOperand() {
-    this.operation.deleteOperand();
+    this.operation.resetOperand();
     this.changeCBtn();
     this.updateDisplay();
   }
@@ -134,10 +139,10 @@ class Calculator {
   }
 
   resolveOperation() {
-    const checkedElement = this.operatorsElements.filter(el => el.checked)[0];
-    if (checkedElement.length === 0) return;
-    
-    checkedElement.checked = false;
+    const checkedElement = this.operatorsElements.filter(el => el.checked);
+    if (checkedElement.length >= 1) {
+      checkedElement[0].checked = false;
+    }
 
     this.operation.resolveOperation();
     this.updateDisplay();
