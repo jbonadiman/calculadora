@@ -2,6 +2,9 @@ export class Operation {
   static MAX_DIGITS = 9;
   static DECIMAL_SEP = null;
   static THOUSAND_SEP = null;
+  static INTL = Intl.NumberFormat(undefined, {
+    maximumFractionDigits: 8
+  });
 
   constructor() {
     this.op = {
@@ -41,6 +44,8 @@ export class Operation {
     if (this.currentOperand === '0') {
       this.currentOperand = stringDigit.trim();
     } else {
+
+
       this.currentOperand += stringDigit.trim();
     }
   }
@@ -86,18 +91,29 @@ export class Operation {
     return this.currentOperand;
   }
 
+  getOperandAsNumber() {
+    let normalizedOperand = this.currentOperand.replaceAll(Operation.THOUSAND_SEP, '');
+    normalizedOperand = this.currentOperand.replaceAll(Operation.DECIMAL_SEP, '.');
+
+    return Number(normalizedOperand);
+  }
+
   isOperandZeroed() {
     return Number(this.currentOperand) === 0;
   }
 
+  accumulate() {
+    this.accumulatedValue = this.op[this.currentOperator](
+      this.accumulatedValue,
+      this.getOperandAsNumber()
+    );
+  }
+
   setOperator(operator) {
     if (this.lastOperator === null) {
-      this.accumulatedValue = Number(this.currentOperand);
+      this.accumulatedValue = this.getOperandAsNumber();
     } else {
-      this.accumulatedValue = this.op[this.currentOperator](
-        this.accumulatedValue,
-        Number(this.currentOperand)
-      );
+      this.accumulate();
     }
 
     this.lastOperator = this.currentOperator;
@@ -113,10 +129,7 @@ export class Operation {
       return;
     }
 
-    this.accumulatedValue = this.op[this.currentOperator](
-      this.accumulatedValue,
-      Number(this.currentOperand)
-    );
+    this.accumulate();
 
     this.lastOperator = this.currentOperator = null;
     this.currentOperand = this.accumulatedValue;
@@ -124,6 +137,13 @@ export class Operation {
     // this.expression.operands.push(Number(this.currentOperand));
     // this.currentOperand = this.expression.resolve();
     // this.expression = new Expression();
+  }
+
+  formatNumber() {
+    const operandParts = this.currentOperand.split(Operation.DECIMAL_SEP);
+    const secondPart = operandParts.length > 1? `,${operandParts[1]}` : '';
+
+    return `${Operation.INTL.format(Number(operandParts[0]))}${secondPart}`;
   }
 
   isDecimal() {

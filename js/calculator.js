@@ -12,7 +12,7 @@ class Calculator {
     this.display = new Display();
     this.operation = new Operation();
 
-    this.display.update(this.operation.getCurrentOperand());
+    this.display.update(this.operation.formatNumber());
 
     this.digitsElements = [...document.getElementsByClassName('digit')];
     this.eraseElement = document.getElementById('erase');
@@ -149,7 +149,7 @@ class Calculator {
   }
 
   updateDisplay() {
-    this.display.update(this.operation.getCurrentOperand());
+    this.display.update(this.operation.formatNumber());
   }
 }
 
