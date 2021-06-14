@@ -132,7 +132,7 @@ export class Operation {
     this.accumulate();
 
     this.lastOperator = this.currentOperator = null;
-    this.currentOperand = this.accumulatedValue;
+    this.currentOperand = `${this.accumulatedValue}`;
 
     // this.expression.operands.push(Number(this.currentOperand));
     // this.currentOperand = this.expression.resolve();

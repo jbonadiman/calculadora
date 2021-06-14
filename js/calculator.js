@@ -139,12 +139,13 @@ class Calculator {
   }
 
   resolveOperation() {
+    this.operation.resolveOperation();
+
     const checkedElement = this.operatorsElements.filter(el => el.checked);
     if (checkedElement.length >= 1) {
       checkedElement[0].checked = false;
     }
 
-    this.operation.resolveOperation();
     this.updateDisplay();
   }
 
