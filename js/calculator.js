@@ -117,7 +117,7 @@ class Calculator {
   pressDigit(digit) {
     const button = this.digitsElements.filter(btn => btn.textContent === digit)[0];
     button.classList.add('active')
-    setTimeout(function(){ button.classList.remove('active'); }, 500);
+    setTimeout(function(){ button.classList.remove('active'); }, 200);
     button.click();
   }
 
