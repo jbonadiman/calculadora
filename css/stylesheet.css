@@ -42,7 +42,7 @@ div {
 }
 
 .keys {
-    padding: 0.4rem 0.8rem 1rem;
+    padding: 0.4rem 0.8rem 1.6rem;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: var(--key-gap);
@@ -78,30 +78,24 @@ label {
 
 .special {
     background: #a7a7a7;
+    transition: background-color 0.5s;
 }
 
 .special:hover {
-    background: #bfbfbf;
-}
-
-.special:focus {
-    background: #bfbfbf;
+    background: #cbcbcb;
 }
 
 .special:active {
-    background: #cfcfcf;
+    background: #f6f6f6;
 }
 
 .operator {
     background: #fd9404;
     color: #ffffff;
+    transition: background-color 0.5s;
 }
 
 .operator:hover {
-    background: #fdaa35;
-}
-
-.operator:focus {
     background: #fdaa35;
 }
 
@@ -113,18 +107,15 @@ label {
 .digit {
     background: #333333;
     color: #ffffff;
+    transition: background-color 0.5s;
 }
 
 .digit:hover {
-    background: #3c3c3c;
+    background: #484848;
 }
 
 .digit:active {
-    background: #414141;
-}
-
-.digit:focus {
-    background: #3c3c3c;
+    background: #757575;
 }
 
 #equals:active {

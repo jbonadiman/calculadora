@@ -86,19 +86,15 @@ class Calculator {
 
   pressOperator(operatorId) {
     const button = this.operatorsElements.filter(op => op.id === operatorId)[0];
-    button.focus();
     button.click();
   }
 
   pressEquals() {
-    this.equalsElement.focus();
     this.equalsElement.click();
   }
 
   pressDigit(digit) {
     const button = this.digitsElements.filter(btn => btn.textContent === digit)[0];
-
-    button.focus();
     button.click();
   }
 
