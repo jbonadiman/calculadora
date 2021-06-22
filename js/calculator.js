@@ -19,6 +19,27 @@ class Calculator {
     this.operatorsElements = [...document.getElementsByName('operator')].filter(btn => btn.id !== 'equals');
     this.equalsElement = document.getElementById('equals');
 
+    [...document.getElementsByClassName('button')]
+      .forEach(btn => {
+         if (btn.addEventListener) {
+           btn.addEventListener('mouseover', () => {
+             btn.classList.add('hover')
+           });
+
+           btn.addEventListener('mouseout', () => {
+             btn.classList.remove('hover')
+           });
+
+           btn.addEventListener('mousedown', () => {
+             btn.classList.add('active')
+           });
+
+           btn.addEventListener('mouseup', () => {
+             btn.classList.remove('active')
+           });
+         }
+      })
+
     if (this.equalsElement.addEventListener) {
       this.equalsElement.addEventListener('click', () => this.resolveOperation(), false);
     } else {
@@ -95,6 +116,8 @@ class Calculator {
 
   pressDigit(digit) {
     const button = this.digitsElements.filter(btn => btn.textContent === digit)[0];
+    button.classList.add('active')
+    setTimeout(function(){ button.classList.remove('active'); }, 500);
     button.click();
   }
 

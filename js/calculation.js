@@ -14,7 +14,6 @@ export class Operation {
       'multiply': (a, b) => a * b,
     }
 
-    //this.expression = new Expression();
     this.currentOperand = '0'
     this.accumulatedValue = 0;
 
@@ -44,8 +43,6 @@ export class Operation {
     if (this.currentOperand === '0') {
       this.currentOperand = stringDigit.trim();
     } else {
-
-
       this.currentOperand += stringDigit.trim();
     }
   }
@@ -71,7 +68,6 @@ export class Operation {
   }
 
   deleteOperation() {
-    this.expression = new Expression();
     this.currentOperand = '0'
     this.accumulatedValue = 0;
   }
@@ -118,9 +114,6 @@ export class Operation {
 
     this.lastOperator = this.currentOperator;
     this.currentOperator = operator;
-
-    // this.expression.operation = operator;
-    // this.expression.operands.push(Number(this.currentOperand));
     this.resetOperand();
   }
 
@@ -130,13 +123,8 @@ export class Operation {
     }
 
     this.accumulate();
-
     this.lastOperator = this.currentOperator = null;
     this.currentOperand = `${this.accumulatedValue}`;
-
-    // this.expression.operands.push(Number(this.currentOperand));
-    // this.currentOperand = this.expression.resolve();
-    // this.expression = new Expression();
   }
 
   formatNumber() {
@@ -148,66 +136,5 @@ export class Operation {
 
   isDecimal() {
     return this.currentOperand.match(new RegExp('\\' + Operation.DECIMAL_SEP));
-  }
-}
-
-export class Expression {
-  operation = undefined;
-  operands = undefined;
-
-  constructor(operation, ...operands) {
-    this.operation = operation
-    this.operands = operands;
-  }
-
-  sum() {
-    return this.getSolvedOperands().reduce((op1, op2) => op1 + op2);
-  }
-
-  subtract() {
-    return this.getSolvedOperands().reduce((op1, op2) => op1 - op2);
-
-  }
-
-  multiply() {
-    return this.getSolvedOperands().reduce((op1, op2) => op1 * op2);
-  }
-
-  divide() {
-    return this.getSolvedOperands().reduce((op1, op2) => op1 / op2);
-  }
-
-  resolve() {
-    if (this.operation === undefined || this.operation === null) return Error('operation must be defined');
-    return this[this.operation]();
-  }
-
-  getSolvedOperands() {
-    return this.operands.map(op => {
-      if (op instanceof Expression) {
-        return op.resolve();
-      }
-
-      return op;
-    });
-  }
-
-  toString() {
-    let convOperands = {
-      'sum': '+',
-      'subtract': '-',
-      'multiply': '*',
-      'divide': '/',
-    }
-
-    return this.operands
-      .map(op => {
-        if (op instanceof Expression) {
-          return op.toString();
-        }
-
-        return op;
-      })
-      .join(` ${convOperands[this.operation]} `);
   }
 }
