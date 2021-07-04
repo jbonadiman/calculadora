@@ -23,7 +23,9 @@ class Calculator {
       .forEach(btn => {
          if (btn.addEventListener) {
            btn.addEventListener('mouseover', () => {
-             btn.classList.add('hover')
+             if (!btn.classList.contains('active')) {
+               btn.classList.add('hover')
+             }
            });
 
            btn.addEventListener('mouseout', () => {
@@ -31,11 +33,13 @@ class Calculator {
            });
 
            btn.addEventListener('mousedown', () => {
+             btn.classList.remove('hover')
              btn.classList.add('active')
            });
 
            btn.addEventListener('mouseup', () => {
-             btn.classList.remove('active')
+             btn.classList.remove('active');
+             btn.classList.add('hover');
            });
          }
       })
