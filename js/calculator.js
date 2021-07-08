@@ -22,22 +22,22 @@ class Calculator {
     [...document.getElementsByClassName('button')]
       .forEach(btn => {
          if (btn.addEventListener) {
-           btn.addEventListener('mouseover', () => {
+           btn.addEventListener('pointerover', () => {
              if (!btn.classList.contains('active')) {
                btn.classList.add('hover')
              }
            });
 
-           btn.addEventListener('mouseout', () => {
+           btn.addEventListener('pointerout', () => {
              btn.classList.remove('hover')
            });
 
-           btn.addEventListener('mousedown', () => {
+           btn.addEventListener('pointerdown', () => {
              btn.classList.remove('hover')
              btn.classList.add('active')
            });
 
-           btn.addEventListener('mouseup', () => {
+           btn.addEventListener('pointerup', () => {
              btn.classList.remove('active');
              btn.classList.add('hover');
            });
