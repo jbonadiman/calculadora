@@ -76,6 +76,11 @@ label {
     transition: background-color 0.5s;
 }
 
+.digit {
+    background: #333333;
+    color: #ffffff;
+}
+
 .digit.active {
     background-color: #808080;
 }
@@ -88,6 +93,14 @@ label {
     background: #a7a7a7;
 }
 
+.special.active {
+    background: #e7e7e7;
+}
+
+.special.hover {
+    background: #c6c6c6;
+}
+
 .operator {
     background: #fd9404;
     color: #ffffff;
@@ -95,7 +108,7 @@ label {
 }
 
 .operator.active {
-    filter: brightness(150%);
+    background-color: #ffd32b;
 }
 
 .operator.hover {
@@ -107,10 +120,7 @@ label {
     color: #fd9404;
 }
 
-.digit {
-    background: #333333;
-    color: #ffffff;
-}
+
 
 
 #zero {
