@@ -57,7 +57,7 @@ export class Operation {
 
   deleteDigit() {
     if (this.currentOperand.length === 1) {
-      this.currentOperand = '0';
+      this.resetOperand();
     }
 
     this.currentOperand = this.currentOperand.substring(0, this.currentOperand.length - 1);
@@ -68,7 +68,7 @@ export class Operation {
   }
 
   deleteOperation() {
-    this.currentOperand = '0'
+    this.resetOperand();
     this.accumulatedValue = 0;
   }
 
@@ -114,6 +114,7 @@ export class Operation {
 
     this.lastOperator = this.currentOperator;
     this.currentOperator = operator;
+    //this.currentOperand = `${this.accumulatedValue}`;
     this.resetOperand();
   }
 
@@ -129,7 +130,7 @@ export class Operation {
 
   formatNumber() {
     const operandParts = this.currentOperand.split(Operation.DECIMAL_SEP);
-    const secondPart = operandParts.length > 1? `,${operandParts[1]}` : '';
+    const secondPart = operandParts.length > 1? `${Operation.DECIMAL_SEP}${operandParts[1]}` : '';
 
     return `${Operation.INTL.format(Number(operandParts[0]))}${secondPart}`;
   }

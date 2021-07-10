@@ -1,6 +1,38 @@
 import Display from './display.js';
 import {Operation} from './calculation.js';
 
+let setBtnStateAsClass = function (btnArray) {
+  btnArray.forEach(btn => {
+    if (btn.addEventListener) {
+      btn.addEventListener('pointerover', () => {
+        if (!btn.classList.contains('active')) {
+          btn.classList.add('hover')
+        }
+      });
+
+      btn.addEventListener('pointerout', () => {
+        btn.classList.remove('hover')
+      });
+
+      btn.addEventListener('pointerdown', () => {
+        btn.classList.remove('hover')
+        btn.classList.add('active')
+      });
+
+      btn.addEventListener('pointerup', () => {
+        btn.classList.remove('active');
+        btn.classList.add('hover');
+      });
+    } else {
+      browserNotCompatibleError();
+    }
+  })
+}
+
+let browserNotCompatibleError = function () {
+  console.error('Browser not compatible!');
+}
+
 class Calculator {
   static DIGIT_KEYS = /^\d$/;
   static SEP_KEYS = /^[,.]$/;
@@ -17,6 +49,7 @@ class Calculator {
 
     this.display.update(this.operation.formatNumber());
 
+    this.checkedElement = null;
     this.digitsElements = [...document.getElementsByClassName('digit')];
     this.eraseElement = document.getElementById('erase');
     this.operatorsElements = [...document.getElementsByName('operator')].filter(btn => btn.id !== 'equals');
@@ -34,56 +67,43 @@ class Calculator {
       }
     };
 
-    [...document.getElementsByClassName('button')]
-      .forEach(btn => {
-         if (btn.addEventListener) {
-           btn.addEventListener('pointerover', () => {
-             if (!btn.classList.contains('active')) {
-               btn.classList.add('hover')
-             }
-           });
-
-           btn.addEventListener('pointerout', () => {
-             btn.classList.remove('hover')
-           });
-
-           btn.addEventListener('pointerdown', () => {
-             btn.classList.remove('hover')
-             btn.classList.add('active')
-           });
-
-           btn.addEventListener('pointerup', () => {
-             btn.classList.remove('active');
-             btn.classList.add('hover');
-           });
-         }
-      })
+    setBtnStateAsClass([...document.getElementsByClassName('button')]);
 
     if (this.equalsElement.addEventListener) {
-      this.equalsElement.addEventListener('click', () => this.resolveOperation(), false);
+      this.equalsElement.addEventListener(
+        'click',
+        () => this.resolveOperation(),
+        false
+      );
     } else {
-      console.error('Browser not compatible!');
+      browserNotCompatibleError();
     }
 
     this.operatorsElements
       .forEach(btn => {
         if (btn.addEventListener) {
-          btn.addEventListener('click', () => this.setOperator(), false);
+          btn.addEventListener(
+            'click',
+            () => this.setOperator(),
+            false
+          );
         } else {
-          console.error('Browser not compatible!');
+          browserNotCompatibleError();
         }
       });
 
     if (this.eraseElement.addEventListener) {
-      this.eraseElement.addEventListener('click', () => {
-        if (this.eraseElement.textContent === 'C') {
-          this.deleteOperand();
-        } else if (this.eraseElement.textContent === 'AC') {
-          this.deleteOperation();
-        }
-      }, false);
+      this.eraseElement.addEventListener(
+        'click',
+        () => {
+          if (this.eraseElement.textContent === 'C') {
+            this.deleteOperand();
+          } else if (this.eraseElement.textContent === 'AC') {
+            this.deleteOperation();
+          }
+        }, false);
     } else {
-      console.error('Browser not compatible!');
+      browserNotCompatibleError();
     }
 
     this.digitsElements
@@ -174,20 +194,20 @@ class Calculator {
   }
 
   setOperator() {
-    const checkedElement = this.operatorsElements.filter(el => el.checked);
-    if (checkedElement.length === 0) return;
+    if (!this.checkedElement) return;
 
-    this.operation.setOperator(checkedElement[0].value);
+    this.operation.setOperator(this.checkedElement.value);
     this.updateDisplay();
   }
 
   resolveOperation() {
     this.operation.resolveOperation();
 
-    const checkedElement = this.operatorsElements.filter(el => el.checked);
-    if (checkedElement.length >= 1) {
-      checkedElement[0].checked = false;
-    }
+    this.checkedElement.checked = false;
+    // const checkedElement = this.operatorsElements.filter(el => el.checked);
+    // if (checkedElement.length >= 1) {
+    //   checkedElement[0].checked = false;
+    // }
 
     this.updateDisplay();
   }
