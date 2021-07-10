@@ -8,7 +8,7 @@ class Display {
   }
 
   update(value) {
-    this.element.textContent = value; //Display.INTL.format(Number(value));
+    this.element.textContent = value;
   }
 }
 
