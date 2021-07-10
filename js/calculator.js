@@ -7,6 +7,9 @@ class Calculator {
   static OPERATOR_KEYS = /^[\/*\-+]$/;
   static EQUALS_KEYS = /^Enter$|^=$/;
   static DELETE_KEYS = /^Backspace$/;
+  static SPECIAL_KEYS = /^Delete$/;
+
+  static ACTIVE_STYLE_DURATION = 200;
 
   constructor() {
     this.display = new Display();
@@ -18,6 +21,18 @@ class Calculator {
     this.eraseElement = document.getElementById('erase');
     this.operatorsElements = [...document.getElementsByName('operator')].filter(btn => btn.id !== 'equals');
     this.equalsElement = document.getElementById('equals');
+
+    this.eraseElement.changeAcText = function () {
+      if (this.textContent === 'AC') {
+        this.textContent = 'C';
+      }
+    };
+
+    this.eraseElement.changeCText = function () {
+      if (this.textContent === 'C') {
+        this.textContent = 'AC';
+      }
+    };
 
     [...document.getElementsByClassName('button')]
       .forEach(btn => {
@@ -85,7 +100,7 @@ class Calculator {
               if (checkedElement.length > 0) {
                 checkedElement[0].checked = false;
               }
-              this.changeAcBtn();
+              this.eraseElement.changeAcText();
               this.updateDisplay();
             }, false);
           } else if (btn.textContent === Operation.DECIMAL_SEP) {
@@ -97,37 +112,42 @@ class Calculator {
       });
   }
 
-  changeAcBtn() {
-    if (this.eraseElement.textContent === 'AC') {
-      this.eraseElement.textContent = 'C';
-    }
-  }
-
-  changeCBtn() {
-    if (this.eraseElement.textContent === 'C') {
-      this.eraseElement.textContent = 'AC';
-    }
-  }
-
   pressOperator(operatorId) {
     const button = this.operatorsElements.filter(op => op.id === operatorId)[0];
     button.click();
   }
 
-  pressEquals() {
+  keyUpEquals() {
+    setTimeout(
+      () => this.equalsElement.classList.remove('active'),
+      Calculator.ACTIVE_STYLE_DURATION
+    );
+
     this.equalsElement.click();
   }
 
-  pressDigit(digit) {
+  keyDownEquals() {
+    this.equalsElement.classList.add('active');
+  }
+
+  keyUpDigit(digit) {
+    const button = this.digitsElements.filter(btn => btn.textContent === digit)[0];
+    setTimeout(
+      () => button.classList.remove('active'),
+      Calculator.ACTIVE_STYLE_DURATION
+    );
+
+    button.click();
+  }
+
+  keyDownDigit(digit) {
     const button = this.digitsElements.filter(btn => btn.textContent === digit)[0];
     button.classList.add('active')
-    setTimeout(function(){ button.classList.remove('active'); }, 200);
-    button.click();
   }
 
   pressSeparator() {
     this.operation.addDecimal();
-    this.changeAcBtn();
+    this.eraseElement.changeAcText();
     this.updateDisplay();
   }
 
@@ -135,7 +155,7 @@ class Calculator {
     this.operation.deleteDigit();
 
     if (this.operation.isOperandZeroed()) {
-      this.changeCBtn();
+      this.eraseElement.changeCText();
     }
 
     this.updateDisplay();
@@ -143,13 +163,13 @@ class Calculator {
 
   deleteOperand() {
     this.operation.resetOperand();
-    this.changeCBtn();
+    this.eraseElement.changeCText();
     this.updateDisplay();
   }
 
   deleteOperation() {
     this.operation.deleteOperation();
-    this.changeCBtn();
+    this.eraseElement.changeCText();
     this.updateDisplay();
   }
 
@@ -175,6 +195,19 @@ class Calculator {
   updateDisplay() {
     this.display.update(this.operation.formatNumber());
   }
+
+  keyDownAc() {
+    this.eraseElement.classList.add('active')
+  }
+
+  keyUpAc() {
+    setTimeout(
+      () => this.eraseElement.classList.remove('active'),
+      Calculator.ACTIVE_STYLE_DURATION
+    );
+
+    this.eraseElement.click();
+  }
 }
 
 const calculator = new Calculator();
@@ -193,7 +226,7 @@ if (document.addEventListener) {
 
     switch (true) {
       case Calculator.DIGIT_KEYS.test(key):
-        calculator.pressDigit(key);
+        calculator.keyUpDigit(key);
         break;
       case Calculator.SEP_KEYS.test(key):
         calculator.pressSeparator();
@@ -202,7 +235,10 @@ if (document.addEventListener) {
         calculator.pressOperator(convOperators[key]);
         break;
       case Calculator.EQUALS_KEYS.test(key):
-        calculator.pressEquals();
+        calculator.keyUpEquals();
+        break;
+      case Calculator.SPECIAL_KEYS.test(key):
+        calculator.keyUpAc();
         break;
     }
 
@@ -212,8 +248,17 @@ if (document.addEventListener) {
   document.addEventListener('keydown', evt => {
     const {key} = evt;
     switch (true) {
+      case Calculator.DIGIT_KEYS.test(key):
+        calculator.keyDownDigit(key);
+        break;
       case Calculator.DELETE_KEYS.test(key):
         calculator.deleteDigit();
+        break;
+      case Calculator.EQUALS_KEYS.test(key):
+        calculator.keyDownEquals();
+        break;
+      case Calculator.SPECIAL_KEYS.test(key):
+        calculator.keyDownAc();
         break;
     }
   });
