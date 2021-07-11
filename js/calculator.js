@@ -38,8 +38,9 @@ class Calculator {
   static SEP_KEYS = /^[,.]$/;
   static OPERATOR_KEYS = /^[\/*\-+]$/;
   static EQUALS_KEYS = /^Enter$|^=$/;
-  static DELETE_KEYS = /^Backspace$/;
-  static SPECIAL_KEYS = /^Delete$/;
+  static DELETE_KEY = /^Backspace$/;
+  static AC_KEY = /^Delete$/;
+  static PERCENT_KEY = /^%$/;
 
   static ACTIVE_STYLE_DURATION = 200;
 
@@ -51,10 +52,23 @@ class Calculator {
 
     this.currentOperator = null;
     this.digitsElements = [...document.getElementsByClassName('digit')];
+
     this.eraseElement = document.getElementById('erase');
     this.signElement = document.getElementById('sign');
+    this.percentageElement = document.getElementById('percent');
+
     this.operatorsElements = [...document.getElementsByName('operator')].filter(btn => btn.id !== 'equals');
     this.equalsElement = document.getElementById('equals');
+
+    if (this.percentageElement.addEventListener) {
+      this.percentageElement.addEventListener(
+        'click',
+        () => this.getPercentage(),
+        false
+      )
+    } else {
+      browserNotCompatibleError();
+    }
 
     if (this.signElement.addEventListener) {
       this.signElement.addEventListener(
@@ -177,6 +191,32 @@ class Calculator {
     button.classList.add('active')
   }
 
+  keyDownAc() {
+    this.eraseElement.classList.add('active')
+  }
+
+  keyUpAc() {
+    setTimeout(
+      () => this.eraseElement.classList.remove('active'),
+      Calculator.ACTIVE_STYLE_DURATION
+    );
+
+    this.eraseElement.click();
+  }
+
+  keyDownPercent() {
+    this.percentageElement.classList.add('active')
+  }
+
+  keyUpPercent() {
+    setTimeout(
+      () => this.percentageElement.classList.remove('active'),
+      Calculator.ACTIVE_STYLE_DURATION
+    );
+
+    this.percentageElement.click();
+  }
+
   pressSeparator() {
     this.operation.addDecimal();
     this.eraseElement.changeAcText();
@@ -214,8 +254,11 @@ class Calculator {
   resolveOperation() {
     this.operation.resolveOperation();
 
-    this.currentOperator.checked = false;
-    this.currentOperator = null;
+    if (this.currentOperator) {
+      this.currentOperator.checked = false;
+      this.currentOperator = null;
+    }
+
     this.updateDisplay();
   }
 
@@ -223,21 +266,13 @@ class Calculator {
     this.display.update(this.operation.formatNumber());
   }
 
-  keyDownAc() {
-    this.eraseElement.classList.add('active')
-  }
-
-  keyUpAc() {
-    setTimeout(
-      () => this.eraseElement.classList.remove('active'),
-      Calculator.ACTIVE_STYLE_DURATION
-    );
-
-    this.eraseElement.click();
-  }
-
   changeSign() {
     this.operation.toggleSign();
+    this.updateDisplay();
+  }
+
+  getPercentage() {
+    this.operation.getPercentage();
     this.updateDisplay();
   }
 }
@@ -269,8 +304,11 @@ if (document.addEventListener) {
       case Calculator.EQUALS_KEYS.test(key):
         calculator.keyUpEquals();
         break;
-      case Calculator.SPECIAL_KEYS.test(key):
+      case Calculator.AC_KEY.test(key):
         calculator.keyUpAc();
+        break;
+      case Calculator.PERCENT_KEY.test(key):
+        calculator.keyUpPercent();
         break;
     }
 
@@ -283,14 +321,17 @@ if (document.addEventListener) {
       case Calculator.DIGIT_KEYS.test(key):
         calculator.keyDownDigit(key);
         break;
-      case Calculator.DELETE_KEYS.test(key):
+      case Calculator.DELETE_KEY.test(key):
         calculator.deleteDigit();
         break;
       case Calculator.EQUALS_KEYS.test(key):
         calculator.keyDownEquals();
         break;
-      case Calculator.SPECIAL_KEYS.test(key):
+      case Calculator.AC_KEY.test(key):
         calculator.keyDownAc();
+        break;
+      case Calculator.PERCENT_KEY.test(key):
+        calculator.keyDownPercent();
         break;
     }
   });

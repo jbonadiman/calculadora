@@ -40,7 +40,7 @@ export class Operation {
       return;
     }
 
-    if (this.currentOperand === '0') {
+    if (this.isOperandZeroed()) {
       this.currentOperand = stringDigit.trim();
     } else {
       this.currentOperand += stringDigit.trim();
@@ -146,5 +146,9 @@ export class Operation {
     } else {
       this.currentOperand = `-${this.currentOperand}`;
     }
+  }
+
+  getPercentage() {
+    this.currentOperand = `${(this.accumulatedValue / 100) * this.getOperandAsNumber()}`;
   }
 }
