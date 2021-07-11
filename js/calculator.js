@@ -52,8 +52,19 @@ class Calculator {
     this.currentOperator = null;
     this.digitsElements = [...document.getElementsByClassName('digit')];
     this.eraseElement = document.getElementById('erase');
+    this.signElement = document.getElementById('sign');
     this.operatorsElements = [...document.getElementsByName('operator')].filter(btn => btn.id !== 'equals');
     this.equalsElement = document.getElementById('equals');
+
+    if (this.signElement.addEventListener) {
+      this.signElement.addEventListener(
+        'click',
+        () => this.changeSign(),
+        false
+      )
+    } else {
+      browserNotCompatibleError();
+    }
 
     this.eraseElement.changeAcText = function () {
       if (this.textContent === 'AC') {
@@ -223,6 +234,11 @@ class Calculator {
     );
 
     this.eraseElement.click();
+  }
+
+  changeSign() {
+    this.operation.toggleSign();
+    this.updateDisplay();
   }
 }
 

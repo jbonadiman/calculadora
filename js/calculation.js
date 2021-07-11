@@ -137,4 +137,14 @@ export class Operation {
   isDecimal() {
     return this.currentOperand.match(new RegExp('\\' + Operation.DECIMAL_SEP));
   }
+
+  toggleSign() {
+    if (this.isOperandZeroed()) return;
+
+    if (this.currentOperand.startsWith('-')) {
+      this.currentOperand = this.currentOperand.replace('-', '');
+    } else {
+      this.currentOperand = `-${this.currentOperand}`;
+    }
+  }
 }
