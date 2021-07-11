@@ -10,9 +10,6 @@
 
 body {
     padding: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 div {
@@ -46,7 +43,6 @@ div {
     grid-template-columns: repeat(4, 1fr);
     grid-gap: var(--key-gap);
     justify-items: center;
-    width: 9.4rem;
 }
 
 div.op-wrap {
@@ -119,8 +115,6 @@ label {
     background: #fff;
     color: #fd9404;
 }
-
-
 
 
 #zero {
