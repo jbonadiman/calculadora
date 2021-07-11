@@ -280,5 +280,5 @@ if (document.addEventListener) {
   });
 
 } else {
-  console.error('Browser not compatible!');
+  browserNotCompatibleError();
 }
