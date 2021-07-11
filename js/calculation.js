@@ -112,9 +112,8 @@ export class Operation {
       this.accumulate();
     }
 
-    this.lastOperator = this.currentOperator;
     this.currentOperator = operator;
-    //this.currentOperand = `${this.accumulatedValue}`;
+    this.lastOperator = this.currentOperator;
     this.resetOperand();
   }
 
@@ -130,7 +129,7 @@ export class Operation {
 
   formatNumber() {
     const operandParts = this.currentOperand.split(Operation.DECIMAL_SEP);
-    const secondPart = operandParts.length > 1? `${Operation.DECIMAL_SEP}${operandParts[1]}` : '';
+    const secondPart = operandParts.length > 1 ? `${Operation.DECIMAL_SEP}${operandParts[1]}` : '';
 
     return `${Operation.INTL.format(Number(operandParts[0]))}${secondPart}`;
   }

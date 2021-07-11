@@ -49,7 +49,7 @@ class Calculator {
 
     this.display.update(this.operation.formatNumber());
 
-    this.checkedOperator = null;
+    this.currentOperator = null;
     this.digitsElements = [...document.getElementsByClassName('digit')];
     this.eraseElement = document.getElementById('erase');
     this.operatorsElements = [...document.getElementsByName('operator')].filter(btn => btn.id !== 'equals');
@@ -107,7 +107,7 @@ class Calculator {
     }
 
     this.digitsElements
-      .filter(dg => dg.id === 'dot')[0]
+      .find(dg => dg.id === 'dot')
       .textContent = Operation.DECIMAL_SEP;
 
     this.digitsElements
@@ -117,8 +117,8 @@ class Calculator {
             btn.addEventListener('click', () => {
               this.operation.addDigit(btn.textContent);
 
-              if (this.checkedOperator) {
-                this.checkedOperator.checked = false;
+              if (this.currentOperator) {
+                this.currentOperator.checked = false;
               }
 
               this.eraseElement.changeAcText();
@@ -128,7 +128,7 @@ class Calculator {
             btn.addEventListener('click', () => this.pressSeparator(), false);
           }
         } else {
-          console.error('Browser not compatible!');
+          browserNotCompatibleError();
         }
       });
   }
@@ -195,16 +195,16 @@ class Calculator {
   }
 
   setOperator(btn) {
-    this.checkedOperator = btn;
-    this.operation.setOperator(this.checkedOperator.value);
+    this.currentOperator = btn;
+    this.operation.setOperator(this.currentOperator.value);
     this.updateDisplay();
   }
 
   resolveOperation() {
     this.operation.resolveOperation();
 
-    this.checkedOperator.checked = false;
-    this.checkedOperator = null;
+    this.currentOperator.checked = false;
+    this.currentOperator = null;
     this.updateDisplay();
   }
 
