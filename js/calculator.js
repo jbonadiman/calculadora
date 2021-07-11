@@ -49,7 +49,7 @@ class Calculator {
 
     this.display.update(this.operation.formatNumber());
 
-    this.checkedElement = null;
+    this.checkedOperator = null;
     this.digitsElements = [...document.getElementsByClassName('digit')];
     this.eraseElement = document.getElementById('erase');
     this.operatorsElements = [...document.getElementsByName('operator')].filter(btn => btn.id !== 'equals');
@@ -84,7 +84,7 @@ class Calculator {
         if (btn.addEventListener) {
           btn.addEventListener(
             'click',
-            () => this.setOperator(),
+            () => this.setOperator(btn),
             false
           );
         } else {
@@ -116,10 +116,11 @@ class Calculator {
           if (btn.textContent.match(/\d/)) {
             btn.addEventListener('click', () => {
               this.operation.addDigit(btn.textContent);
-              const checkedElement = this.operatorsElements.filter(el => el.checked);
-              if (checkedElement.length > 0) {
-                checkedElement[0].checked = false;
+
+              if (this.checkedOperator) {
+                this.checkedOperator.checked = false;
               }
+
               this.eraseElement.changeAcText();
               this.updateDisplay();
             }, false);
@@ -133,7 +134,7 @@ class Calculator {
   }
 
   pressOperator(operatorId) {
-    const button = this.operatorsElements.filter(op => op.id === operatorId)[0];
+    const button = this.operatorsElements.find(op => op.id === operatorId);
     button.click();
   }
 
@@ -151,7 +152,7 @@ class Calculator {
   }
 
   keyUpDigit(digit) {
-    const button = this.digitsElements.filter(btn => btn.textContent === digit)[0];
+    const button = this.digitsElements.find(btn => btn.textContent === digit);
     setTimeout(
       () => button.classList.remove('active'),
       Calculator.ACTIVE_STYLE_DURATION
@@ -161,7 +162,7 @@ class Calculator {
   }
 
   keyDownDigit(digit) {
-    const button = this.digitsElements.filter(btn => btn.textContent === digit)[0];
+    const button = this.digitsElements.find(btn => btn.textContent === digit);
     button.classList.add('active')
   }
 
@@ -193,22 +194,17 @@ class Calculator {
     this.updateDisplay();
   }
 
-  setOperator() {
-    if (!this.checkedElement) return;
-
-    this.operation.setOperator(this.checkedElement.value);
+  setOperator(btn) {
+    this.checkedOperator = btn;
+    this.operation.setOperator(this.checkedOperator.value);
     this.updateDisplay();
   }
 
   resolveOperation() {
     this.operation.resolveOperation();
 
-    this.checkedElement.checked = false;
-    // const checkedElement = this.operatorsElements.filter(el => el.checked);
-    // if (checkedElement.length >= 1) {
-    //   checkedElement[0].checked = false;
-    // }
-
+    this.checkedOperator.checked = false;
+    this.checkedOperator = null;
     this.updateDisplay();
   }
 
