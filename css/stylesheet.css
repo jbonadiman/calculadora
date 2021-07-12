@@ -22,11 +22,6 @@ div {
     width: 11rem;
 }
 
-.display {
-    height: 6rem;
-    width: 100%;
-}
-
 .display > .value {
     margin-top: 0;
     margin-bottom: 0;
@@ -35,6 +30,21 @@ div {
     color: #ffffff;
     text-align: right;
     font-size: 40px;
+}
+
+@media screen and (max-width: 600px) {
+    * {
+        font-size: 32px;
+    }
+
+    .display > .value {
+        font-size: 50px;
+    }
+}
+
+.display {
+    height: 6rem;
+    width: 100%;
 }
 
 .keys {

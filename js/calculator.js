@@ -242,6 +242,8 @@ class Calculator {
   deleteOperation() {
     this.operation.deleteOperation();
     this.eraseElement.changeCText();
+    this.currentOperator.checked = false;
+    this.currentOperator = null;
     this.updateDisplay();
   }
 

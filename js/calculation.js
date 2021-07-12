@@ -67,8 +67,14 @@ export class Operation {
     this.currentOperand = '0';
   }
 
+  resetOperator() {
+    this.lastOperator = null;
+    this.currentOperator = null;
+  }
+
   deleteOperation() {
     this.resetOperand();
+    this.resetOperator();
     this.accumulatedValue = 0;
   }
 
