@@ -51,7 +51,11 @@ class Calculator {
     this.display.update(this.operation.formatNumber());
 
     this.currentOperator = null;
-    this.digitsElements = [...document.getElementsByClassName('digit')];
+    this.digitsElements = [...document.getElementsByClassName('digit')]
+      .reduce((acc, element) => {
+        acc[element.textContent] = element;
+        return acc;
+      }, {});
 
     this.eraseElement = document.getElementById('erase');
     this.signElement = document.getElementById('sign');
@@ -131,11 +135,9 @@ class Calculator {
       browserNotCompatibleError();
     }
 
-    this.digitsElements
-      .find(dg => dg.id === 'dot')
-      .textContent = Operation.DECIMAL_SEP;
+    this.digitsElements['.'].textContent = Operation.DECIMAL_SEP;
 
-    this.digitsElements
+    Object.values(this.digitsElements)
       .forEach(btn => {
         if (btn.addEventListener) {
           if (btn.textContent.match(/\d/)) {
@@ -177,7 +179,7 @@ class Calculator {
   }
 
   keyUpDigit(digit) {
-    const button = this.digitsElements.find(btn => btn.textContent === digit);
+    const button = this.digitsElements[digit];
     setTimeout(
       () => button.classList.remove('active'),
       Calculator.ACTIVE_STYLE_DURATION
@@ -187,7 +189,7 @@ class Calculator {
   }
 
   keyDownDigit(digit) {
-    const button = this.digitsElements.find(btn => btn.textContent === digit);
+    const button = this.digitsElements[digit];
     button.classList.add('active')
   }
 
@@ -209,12 +211,11 @@ class Calculator {
   }
 
   keyUpPercent() {
+    this.percentageElement.click();
     setTimeout(
       () => this.percentageElement.classList.remove('active'),
       Calculator.ACTIVE_STYLE_DURATION
     );
-
-    this.percentageElement.click();
   }
 
   pressSeparator() {
@@ -242,8 +243,12 @@ class Calculator {
   deleteOperation() {
     this.operation.deleteOperation();
     this.eraseElement.changeCText();
-    this.currentOperator.checked = false;
-    this.currentOperator = null;
+
+    if (this.currentOperator) {
+      this.currentOperator.checked = false;
+      this.currentOperator = null;
+    }
+
     this.updateDisplay();
   }
 
