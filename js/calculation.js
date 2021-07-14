@@ -135,8 +135,11 @@ export class Operation {
 
   formatNumber() {
     const operandParts = this.currentOperand.split(Operation.DECIMAL_SEP);
+    alert(`operandParts: ${operandParts}`);
     const secondPart = operandParts.length > 1 ? `${Operation.DECIMAL_SEP}${operandParts[1]}` : '';
+    alert(`secondPart: ${secondPart}`);
 
+    alert('return ' + `${Operation.INTL.format(Number(operandParts[0]))}${secondPart}`);
     return `${Operation.INTL.format(Number(operandParts[0]))}${secondPart}`;
   }
 
