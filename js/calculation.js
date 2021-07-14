@@ -94,21 +94,12 @@ export class Operation {
   }
 
   getOperandAsNumber() {
-    alert('currentOperand: ' + this.currentOperand);
-    alert('typeof currentOperand: ' + typeof (this.currentOperand));
-    alert('Operation.THOUSAND_SEP: ' + Operation.THOUSAND_SEP);
-    alert('typeof Operation.THOUSAND_SEP: ' + typeof (Operation.THOUSAND_SEP));
+    const thousandPattern = new RegExp('\\' + Operation.THOUSAND_SEP, 'g');
+    const decimalPattern = new RegExp('\\' + Operation.DECIMAL_SEP, 'g');
 
-    const reg = new RegExp('\\' + Operation.THOUSAND_SEP, 'g');
-    alert('regex pattern ' + reg);
-    alert('regex test ' + this.currentOperand.replace(reg, ''));
-    alert('then, error... ');
-
-    alert('test of error ' + this.currentOperand.replaceAll(Operation.THOUSAND_SEP, ''));
-
-    let normalizedOperand = this.currentOperand.replaceAll(Operation.THOUSAND_SEP, '');
+    let normalizedOperand = this.currentOperand.replace(thousandPattern, '');
     alert('before ' + normalizedOperand)
-    normalizedOperand = this.currentOperand.replaceAll(Operation.DECIMAL_SEP, '.');
+    normalizedOperand = this.currentOperand.replace(decimalPattern, '.');
     alert('after' + normalizedOperand);
 
     alert('as number ' + Number(normalizedOperand));
