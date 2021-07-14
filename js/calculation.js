@@ -98,7 +98,12 @@ export class Operation {
     alert('typeof currentOperand: ' + typeof (this.currentOperand));
     alert('Operation.THOUSAND_SEP: ' + Operation.THOUSAND_SEP);
     alert('typeof Operation.THOUSAND_SEP: ' + typeof (Operation.THOUSAND_SEP));
-    
+
+    const reg = new RegExp('\\' + Operation.THOUSAND_SEP, 'g');
+    alert('regex pattern ' + reg);
+    alert('regex test ' + this.currentOperand.replace(reg, ''));
+    alert('then, error... ');
+
     alert('test of error ' + this.currentOperand.replaceAll(Operation.THOUSAND_SEP, ''));
 
     let normalizedOperand = this.currentOperand.replaceAll(Operation.THOUSAND_SEP, '');
