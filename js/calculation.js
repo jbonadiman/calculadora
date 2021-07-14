@@ -94,6 +94,11 @@ export class Operation {
   }
 
   getOperandAsNumber() {
+    alert('currentOperand: ' + this.currentOperand);
+    alert('typeof currentOperand: ' + typeof (this.currentOperand));
+    alert('Operation.THOUSAND_SEP: ' + Operation.THOUSAND_SEP);
+    alert('typeof Operation.THOUSAND_SEP: ' + typeof (Operation.THOUSAND_SEP));
+    
     alert('test of error ' + this.currentOperand.replaceAll(Operation.THOUSAND_SEP, ''));
 
     let normalizedOperand = this.currentOperand.replaceAll(Operation.THOUSAND_SEP, '');
