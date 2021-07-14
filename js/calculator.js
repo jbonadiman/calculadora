@@ -258,7 +258,7 @@ class Calculator {
   }
 
   setOperator(btn) {
-    alert(btn.textContent);
+    alert(btn.value);
 
     this.currentOperator = btn;
 

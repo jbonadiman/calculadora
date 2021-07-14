@@ -113,13 +113,17 @@ export class Operation {
 
   setOperator(operator) {
     if (!this.lastOperator) {
+      alert('inside if');
       this.accumulatedValue = this.getOperandAsNumber();
     } else {
+      alert('inside else');
       this.accumulate();
     }
 
     this.currentOperator = operator;
     this.lastOperator = this.currentOperator;
+
+    alert('resetting operand');
     this.resetOperand();
   }
 
