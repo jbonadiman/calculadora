@@ -26,7 +26,7 @@ let setBtnStateAsClass = function (btnArray) {
     } else {
       browserNotCompatibleError();
     }
-  })
+  });
 }
 
 let browserNotCompatibleError = function () {
@@ -61,7 +61,9 @@ class Calculator {
     this.signElement = document.getElementById('sign');
     this.percentageElement = document.getElementById('percent');
 
-    this.operatorsElements = [...document.getElementsByName('operator')].filter(btn => btn.id !== 'equals');
+    this.operatorsElements = [...document.getElementsByName('operator')]
+      .filter(btn => btn.id !== 'equals');
+
     this.equalsElement = document.getElementById('equals');
 
     if (this.percentageElement.addEventListener) {
@@ -69,7 +71,7 @@ class Calculator {
         'click',
         () => this.getPercentage(),
         false
-      )
+      );
     } else {
       browserNotCompatibleError();
     }
@@ -79,7 +81,7 @@ class Calculator {
         'click',
         () => this.changeSign(),
         false
-      )
+      );
     } else {
       browserNotCompatibleError();
     }
@@ -194,7 +196,7 @@ class Calculator {
   }
 
   keyDownAc() {
-    this.eraseElement.classList.add('active')
+    this.eraseElement.classList.add('active');
   }
 
   keyUpAc() {
@@ -207,7 +209,7 @@ class Calculator {
   }
 
   keyDownPercent() {
-    this.percentageElement.classList.add('active')
+    this.percentageElement.classList.add('active');
   }
 
   keyUpPercent() {

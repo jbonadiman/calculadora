@@ -32,16 +32,6 @@ div {
     font-size: 40px;
 }
 
-@media screen and (max-width: 600px) {
-    * {
-        font-size: 32px;
-    }
-
-    .display > .value {
-        font-size: 50px;
-    }
-}
-
 .display {
     height: 6rem;
     width: 100%;
@@ -53,6 +43,103 @@ div {
     grid-template-columns: repeat(4, 1fr);
     grid-gap: var(--key-gap);
     justify-items: center;
+}
+
+@media screen and (max-width: 360px) {
+    * {
+        font-size: 32px;
+    }
+
+    .display > .value {
+        font-size: 50px;
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .calculator {
+        margin: 0;
+        width: 100%;
+    }
+
+    div {
+        border-radius: 0;
+    }
+
+
+    .keys {
+        padding: 0.8rem 0.8rem 1.6rem;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    * {
+        font-size: 32px;
+    }
+
+    .display > .value {
+        font-size: 50px;
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .calculator {
+        margin: 0;
+        width: 100%;
+    }
+
+    div {
+        border-radius: 0;
+    }
+
+
+    .keys {
+        padding: 0.8rem 0.8rem 1.6rem;
+    }
+}
+
+@media screen and (min-height: 641px) and (max-height: 800px) {
+    :root {
+        --key-gap: 0.5rem;
+    }
+
+    .keys {
+        padding: 1rem 0.8rem 1.85rem;
+    }
+}
+
+@media screen and (min-height: 800px) and (max-height: 900px) {
+    :root {
+        --key-gap: 0.7rem;
+    }
+
+    .display > .value {
+        padding-top: 3.5rem;
+        font-size: 55px;
+    }
+
+    .keys {
+        padding: 3rem 0.8rem 3.57rem;
+    }
+}
+
+@media screen and (max-width: 360px) and (max-height: 600px) {
+    * {
+        font-size: 28px;
+    }
+
+    .display > .value {
+        font-size: 43px;
+    }
+
+    .keys {
+        padding-bottom: 1.9rem;
+    }
 }
 
 div.op-wrap {
