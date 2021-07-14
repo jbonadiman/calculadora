@@ -116,7 +116,6 @@ class Calculator {
           btn.addEventListener(
             'click',
             () => {
-              alert('dentro do click');
               this.setOperator(btn);
             },
             false
@@ -258,8 +257,6 @@ class Calculator {
   }
 
   setOperator(btn) {
-    alert(btn.value);
-
     this.currentOperator = btn;
 
     alert('calling setOperator with ' + this.currentOperator.value);

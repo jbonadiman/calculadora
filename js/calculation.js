@@ -95,8 +95,11 @@ export class Operation {
 
   getOperandAsNumber() {
     let normalizedOperand = this.currentOperand.replaceAll(Operation.THOUSAND_SEP, '');
+    alert('before ' + normalizedOperand)
     normalizedOperand = this.currentOperand.replaceAll(Operation.DECIMAL_SEP, '.');
+    alert('after' + normalizedOperand);
 
+    alert('as number ' + Number(normalizedOperand));
     return Number(normalizedOperand);
   }
 
@@ -139,11 +142,8 @@ export class Operation {
 
   formatNumber() {
     const operandParts = this.currentOperand.split(Operation.DECIMAL_SEP);
-    alert(`operandParts: ${operandParts}`);
     const secondPart = operandParts.length > 1 ? `${Operation.DECIMAL_SEP}${operandParts[1]}` : '';
-    alert(`secondPart: ${secondPart}`);
 
-    alert('return ' + `${Operation.INTL.format(Number(operandParts[0]))}${secondPart}`);
     return `${Operation.INTL.format(Number(operandParts[0]))}${secondPart}`;
   }
 
