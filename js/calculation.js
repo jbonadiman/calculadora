@@ -94,6 +94,8 @@ export class Operation {
   }
 
   getOperandAsNumber() {
+    alert('test of error ' + this.currentOperand.replaceAll(Operation.THOUSAND_SEP, ''));
+
     let normalizedOperand = this.currentOperand.replaceAll(Operation.THOUSAND_SEP, '');
     alert('before ' + normalizedOperand)
     normalizedOperand = this.currentOperand.replaceAll(Operation.DECIMAL_SEP, '.');
