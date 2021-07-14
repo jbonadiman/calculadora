@@ -258,11 +258,7 @@ class Calculator {
 
   setOperator(btn) {
     this.currentOperator = btn;
-
-    alert('calling setOperator with ' + this.currentOperator.value);
     this.operation.setOperator(this.currentOperator.value);
-
-    alert('updating display');
     this.updateDisplay();
   }
 

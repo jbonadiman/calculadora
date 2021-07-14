@@ -6,6 +6,10 @@ export class Operation {
     maximumFractionDigits: 8
   });
 
+  static THOUSAND_PATTERN = null;
+  static DECIMAL_PATTERN = null;
+
+
   constructor() {
     this.op = {
       'sum': (a, b) => a + b,
@@ -32,6 +36,9 @@ export class Operation {
       Operation.THOUSAND_SEP = parts
         .find(part => part.type === 'group')
         .value;
+
+      Operation.THOUSAND_PATTERN = new RegExp('\\' + Operation.THOUSAND_SEP, 'g');
+      Operation.DECIMAL_PATTERN = new RegExp('\\' + Operation.DECIMAL_SEP, 'g');
     }
   }
 
@@ -94,15 +101,10 @@ export class Operation {
   }
 
   getOperandAsNumber() {
-    const thousandPattern = new RegExp('\\' + Operation.THOUSAND_SEP, 'g');
-    const decimalPattern = new RegExp('\\' + Operation.DECIMAL_SEP, 'g');
+    const normalizedOperand = this.currentOperand
+      .replace(Operation.THOUSAND_PATTERN, '')
+      .replace(Operation.DECIMAL_PATTERN, '.');
 
-    let normalizedOperand = this.currentOperand.replace(thousandPattern, '');
-    alert('before ' + normalizedOperand)
-    normalizedOperand = this.currentOperand.replace(decimalPattern, '.');
-    alert('after' + normalizedOperand);
-
-    alert('as number ' + Number(normalizedOperand));
     return Number(normalizedOperand);
   }
 
@@ -119,17 +121,14 @@ export class Operation {
 
   setOperator(operator) {
     if (!this.lastOperator) {
-      alert('inside if');
       this.accumulatedValue = this.getOperandAsNumber();
     } else {
-      alert('inside else');
       this.accumulate();
     }
 
     this.currentOperator = operator;
     this.lastOperator = this.currentOperator;
 
-    alert('resetting operand');
     this.resetOperand();
   }
 
