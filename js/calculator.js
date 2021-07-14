@@ -115,12 +115,18 @@ class Calculator {
         if (btn.addEventListener) {
           btn.addEventListener(
             'click',
-            () => this.setOperator(btn),
+            () => {
+              alert('dentro do click');
+              this.setOperator(btn);
+            },
             false
           );
           btn.addEventListener(
             'touchstart',
-            () => this.setOperator(btn),
+            () => {
+              alert('dentro do touch');
+              this.setOperator(btn);
+            },
             false
           );
         } else {
