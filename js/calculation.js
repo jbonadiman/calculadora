@@ -112,7 +112,7 @@ export class Operation {
   }
 
   setOperator(operator) {
-    if (this.lastOperator === null) {
+    if (!this.lastOperator) {
       this.accumulatedValue = this.getOperandAsNumber();
     } else {
       this.accumulate();

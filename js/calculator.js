@@ -121,14 +121,6 @@ class Calculator {
             },
             false
           );
-          btn.addEventListener(
-            'touchstart',
-            () => {
-              alert('dentro do touch');
-              this.setOperator(btn);
-            },
-            false
-          );
         } else {
           browserNotCompatibleError();
         }
