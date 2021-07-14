@@ -118,6 +118,11 @@ class Calculator {
             () => this.setOperator(btn),
             false
           );
+          btn.addEventListener(
+            'touchstart',
+            () => this.setOperator(btn),
+            false
+          );
         } else {
           browserNotCompatibleError();
         }
