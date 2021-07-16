@@ -17,10 +17,10 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "calculator-clone/node_modules/.bin/react-scripts start",
-    "build": "calculator-clone/node_modules/.bin/react-scripts build",
-    "test": "calculator-clone/node_modules/.bin/react-scripts test",
-    "eject": "calculator-clone/node_modules/.bin/react-scripts eject"
+    "start": "node_modules/.bin/react-scripts start",
+    "build": "node_modules/.bin/react-scripts build",
+    "test": "node_modules/.bin/react-scripts test",
+    "eject": "node_modules/.bin/react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
