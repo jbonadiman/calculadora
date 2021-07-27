@@ -73,7 +73,7 @@ div {
 
 @media screen and (max-width: 640px) {
     body {
-        font-size: 1.23em;
+        font-size: 2em;
         padding: 0;
         margin: 0;
     }
@@ -112,7 +112,7 @@ div {
     }
 
     .display > .value {
-        padding-top: 3.5em;
+        padding-top: 2em;
         font-size: 2.11em;
     }
 
@@ -122,16 +122,16 @@ div {
 }
 
 @media screen and (max-width: 360px) and (max-height: 600px) {
-    * {
-        font-size: 28px;
+    body {
+        font-size: 1.75em;
     }
 
     .display > .value {
-        font-size: 43px;
+        font-size: 1.536em;
     }
 
     .keys {
-        padding-bottom: 1.9rem;
+        padding-bottom: 1.9em;
     }
 }
 
@@ -209,9 +209,9 @@ label {
 
 
 #zero {
-    border-radius: 2rem;
+    border-radius: 2em;
     grid-column-end: span 2;
     width: 100%;
     text-align: left;
-    padding-left: 0.8rem;
+    padding-left: 0.8em;
 }
