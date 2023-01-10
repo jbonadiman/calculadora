@@ -1,7 +1,6 @@
 # 🖥 Calculator clone
 
-I created this project as a means of training my basic HTML/CSS/JS skills while studying frontend development. I intend to go back to it whenever I trying to learn something new.
+I created this project as a mean of training my basic HTML/CSS/JS skills while studying frontend development. I intend to go back to it whenever I'm trying to learn something new.
 
 ## 🧑‍💻 Clones so far:
-✔ Vanilla JS</br>
-React (in progress)
+✔ Vanilla JS
